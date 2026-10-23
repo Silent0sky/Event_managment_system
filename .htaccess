@@ -1,0 +1,39 @@
+# =========================================================
+# FRESHERS PARTY 2026 — root security configuration
+# =========================================================
+
+# No directory listing
+Options -Indexes
+ServerSignature Off
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(self), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; frame-ancestors 'self'"
+</IfModule>
+
+# Block direct web access to sensitive .sql files and backups
+<FilesMatch "\.(sql|log|lock|md|ini|bak|old)$">
+  Require all denied
+</FilesMatch>
+
+# Block the config & includes folders entirely (PHP-only code, nothing to browse)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^config/ - [R=404,L]
+  RewriteRule ^includes/ - [R=404,L]
+</IfModule>
+
+# Custom Error Pages
+ErrorDocument 404 error.php?code=404
+ErrorDocument 403 error.php?code=403
+
+# Optional: force HTTPS (uncomment after enabling your free SSL certificate)
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} !=on
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>

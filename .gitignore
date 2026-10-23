@@ -1,0 +1,30 @@
+# Local secrets and installation state
+/config/secrets.php
+/config/installed.lock
+/.env
+/.env.*
+!.env.example
+
+# Database exports and local runtime data
+/infinityfree_database.sql
+/uploads/**
+!/uploads/
+!/uploads/.htaccess
+!/uploads/index.html
+!/uploads/event/
+!/uploads/event/index.html
+!/uploads/payments/
+!/uploads/payments/index.html
+!/uploads/students/
+!/uploads/students/index.html
+/assets/images/payment-qr.png
+
+# Local logs, backups and editor/OS files
+*.log
+*.bak
+*.old
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Generated screenshots are intentionally tracked under docs/screenshots.

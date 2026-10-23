@@ -1,0 +1,11 @@
+# Deny execution/serving of any .php scripts inside uploads
+Options -Indexes
+
+<FilesMatch "(?i)\.(php|php\d*|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp|html|htm|svg)$">
+  Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Content-Security-Policy "default-src 'none'; sandbox"
+</IfModule>
